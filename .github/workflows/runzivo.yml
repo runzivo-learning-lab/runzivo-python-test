@@ -1,11 +1,24 @@
 
-name: Runzivo workflow
+name: Runzivo Python Tests
 
 on:
   workflow_dispatch:
 
 jobs:
-  runzivo:
+  python-tests:
     runs-on: 'rzv-ubuntu-24.04-x64-2vcpu-8gb'
+
     steps:
-      - run: echo "Runzivo workflow is ready"
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run Python application
+        run: python app.py
+
+      - name: Run automated tests
+        run: python -m unittest discover -v
